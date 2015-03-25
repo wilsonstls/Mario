@@ -4,10 +4,21 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
+<!-- keyboard symbols available for generating a Pyramid shape -->
+    <bean id="symbols"  class="mario.PyramidSymbols">
+        <property name="symboltype" value="#"/>
+    </bean>
 
 
-
-  <bean id="testInstance"  class="mario.PyramidTypeFactory"/>
+<!-- printing options available in setPrintMap call-->
+    <bean id="printout"  class="mario.PrintOptions">
+        <property name="printMap">
+           <map>
+               <entry key="1" value="ConsolePrint"/>
+               <entry key="2" value="FilePrint"/>
+           </map>
+        </property>
+    </bean>
 
 
 

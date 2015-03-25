@@ -5,9 +5,9 @@ import java.io.*;
 * prints output to a text file.
 */
 
-public class FilePrint implements PrintStrategy
+public class FilePrint
 {
-    public void print(Pyramid pyramid)
+    static void print(Pyramid pyramid)
     {
       System.out.println("\n Output is to be printed to a text file\n");
       File outfile = new File("c:/Launchcode/Mario/pyramid.txt");
