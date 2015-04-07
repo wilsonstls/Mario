@@ -1,4 +1,8 @@
 package mario;
+
+import java.util.Map;
+import java.util.Set;
+
 /**
 *3/11/15
 * Getter and Setter methods for the keyboard symbol type
@@ -6,19 +10,24 @@ package mario;
 
 public class PyramidSymbols {
 
-     private String symboltype;
+    private Map symbolMap;
 
-     public String getSymbolType() {
-        return symboltype;
-     }
+    public void setSymbolMap(Map symbolMap) {
 
-     public void setSymboltype (String symboltype) {
-         this.symboltype = symboltype;
-         }
+        this.symbolMap = symbolMap;
+    }
 
+    public Map getSymbolMap() {
+        return symbolMap;
+    }
 
-     void display(){
-         System.out.println(" Keyboard Symbol: " +getSymbolType());
-     }
+    public void displayAll() {
 
+        System.out.println("\n Here are the Symbol options \n");
+
+        Set<Map.Entry<String, String>> smap = symbolMap.entrySet();
+        for (Map.Entry<String, String> mE : smap) {
+            System.out.println("Symbol option:  " + mE.getKey());
+        }
+    }
 }

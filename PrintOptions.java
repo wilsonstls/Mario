@@ -12,28 +12,26 @@ import java.util.Set;
 public class PrintOptions {
 
     private Map printMap;
+
     public void setPrintMap(Map printMap) {
+
         this.printMap = printMap;
     }
 
     public Map getPrintMap() {
         return printMap;
     }
-    
 
-    public void display() {
+    public void displayAll() {
 
         System.out.println("\n Here are your printing options \n");
-        Set<Entry<Integer, String>> K = printMap.entrySet();
-        Iterator iT = K.iterator();
-        while (iT.hasNext()) {
-            Map.Entry mE = (Map.Entry) iT.next();
+
+        Set<Map.Entry<String, String>> pmap = printMap.entrySet();
+        for (Entry<String, String> mE : pmap) {
             System.out.println("Print option:  " + mE.getKey() + " - " + mE.getValue());
         }
 
     }
 
 }
-
-
 

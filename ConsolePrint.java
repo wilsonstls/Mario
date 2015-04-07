@@ -4,9 +4,10 @@ import java.io.*;
 * prints output to the screen.
 */
 
-public class ConsolePrint
+public class ConsolePrint implements PrintStrategy
 {
-    static void print(Pyramid pyramid)
+    public void print(Pyramid pyramid)
+
     {
       System.out.println("\nYou selected to print to the console screen !!\n");
 

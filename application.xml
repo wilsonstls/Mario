@@ -4,9 +4,16 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-<!-- keyboard symbols available for generating a Pyramid shape -->
-    <bean id="symbols"  class="mario.PyramidSymbols">
-        <property name="symboltype" value="#"/>
+
+
+<!-- what files the symbols reference to -->
+    <bean id="symbols" class="mario.PyramidSymbols">
+        <property name="symbolMap">
+        <map>
+        <entry key="%" value="PercentSignPyramid"/>
+        <entry key="#" value="PoundSignPyramid"/>
+        </map>
+        </property>
     </bean>
 
 
@@ -21,5 +28,8 @@
     </bean>
 
 
+<!-- to create an instance method for printing output -->
+    <bean id="ConsolePrint" class="mario.ConsolePrint"/>
+    <bean id="FilePrint" class="mario.FilePrint"/>
 
 </beans>

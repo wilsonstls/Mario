@@ -1,11 +1,11 @@
 package mario;
+
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
 import java.util.*;
-import java.util.Map.Entry;
 
-/*Date:  3-11-2015
+
+/*Date:  4-1-2015
 *By:  Kevin Wilson
 *Pset4 problem for Java launchCode class
 *program generates 1-half of a pyramid populated with a keyboard sign that will be selected by the user at run time.
@@ -13,62 +13,54 @@ import java.util.Map.Entry;
 *
 */
 
-public class Mario
-{
+public class Mario {
 
     public static void main(String[] varArgs) {
+        boolean continueMario = true;
         System.out.println("\n  ! The Pyramid Program !\n");
-        System.out.println("   A half pyramid populated with a keyboard symbol will be generated.");
-        System.out.println("   User gets to select printout option.\n");
+        System.out.println("   Half pyramid populated with keyboard symbols selected by the user.");
+        System.out.println("   User also gets to select the print option.\n");
 
-        // retrieve the Symbol character from Symbols Bean
         ApplicationContext context = new ClassPathXmlApplicationContext("application.xml");
+
+        // display the symbol options listed in the symbolmap bean
         PyramidSymbols pyramidsymbols = (PyramidSymbols) context.getBean("symbols");
-        pyramidsymbols.display();
+        pyramidsymbols.displayAll();
+        System.out.println("\nEnter a Symbol  ");
+        Scanner symbolInput = new Scanner(System.in);
+        String strS = symbolInput.nextLine();
+        System.out.println("Symbol entered is:  " + strS);
 
-        // pass the Symbol from the getter method in PyramidSymbols.java into object sT
-        String sT = pyramidsymbols.getSymbolType();
+        // perform a search to check for valid symbol key
+        Map<String, String>tmpSMap = pyramidsymbols.getSymbolMap();
+        if (!tmpSMap.containsKey(strS)) {
+            System.out.println("\n !!! Input Symbol selection not available. ");
+            continueMario = false;
+        }
 
-        // display printout options from printout bean
-        PrintOptions printoptions = (PrintOptions) context.getBean("printout");
-        printoptions.display();
+        // display print options listed in the printmap bean
+        if (continueMario) {
+           PrintOptions printoptions = (PrintOptions) context.getBean("printout");
+           printoptions.displayAll();
+           System.out.println("\nEnter a numeric option:  ");
+           Scanner printInput = new Scanner(System.in);
+           int i = printInput.nextInt();
+           String strI = Integer.toString(i);
 
-        System.out.println("\nEnter a numeric option:  ");
-        Scanner userInput = new Scanner(System.in);
-        int selPrint = userInput.nextInt();
-        // if (selPrint != 1 && selPrint != 2)
-        //     throw new IllegalArgumentException(" Input Error - Invalid Print Selection !!");
+           // perform a search to check for valid print key
+           Map<String, String>tmpPMap = printoptions.getPrintMap();
+           if (!tmpPMap.containsKey(strI)) {
+                System.out.println("\n !!! Input Print selection not available. ");
+                continueMario = false;
+           }
 
-        //convert the input primitive data type to object Integer using wrapper
-        Integer sP = new Integer(selPrint);
-
-        // retrieve print Map and store in tmpMap to create a HashMap
-        Map tmpMap = printoptions.getPrintMap();
-
-        // use a hashmap for converting Object to Integer can then compare Key to input Integer
-        Set<Entry<Integer, String>> tM = tmpMap.entrySet();
-        Iterator mT = tM.iterator();
-        while (mT.hasNext()) {
-            Map.Entry mE = (Map.Entry) mT.next();     /** entries are of Object type */
-            String tmpI = (String) mE.getKey();  /** cast Object Key to String type */
-            int i = Integer.parseInt(tmpI);      /** cast String Key to Int    type */
-            if (i == sP) {
-                System.out.println("Print option:  " + mE.getKey() + " - " + mE.getValue());
-                Pyramid makePyramid = PyramidTypeFactory.makePyramidType(sT);
-                switch(i) {
-                    case 1:
-                        ConsolePrint.print(makePyramid);
-                        break;
-                    case 2:
-                        FilePrint.print(makePyramid);
-                        break;
-                    default:
-                        System.out.println("\n!! ERROR while creating output");
-                }
-
+            // create an instance object for printing the pyramid
+            if (continueMario) {
+                String printVal = tmpPMap.get(strI);
+                Pyramid makePyramid = PyramidTypeFactory.makePyramidType(strS);
+                PrintStrategy printStrategy = (PrintStrategy) context.getBean(printVal);
+                printStrategy.print(makePyramid);
             }
         }
-    }   //closes main
+    }
 }    //closes class Mario
-
-     

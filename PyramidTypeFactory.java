@@ -1,10 +1,13 @@
 package mario;
+
+
 /**
 *2/11/15
 *Factory design pattern implementation that instantiates Pyramid object 
 */
 
 public class PyramidTypeFactory {
+
 
    static Pyramid makePyramidType(String pyramidType)
    {
